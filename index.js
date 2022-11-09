@@ -27,7 +27,7 @@ async function run (){
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const service = await serviceCollection.findOne(query)
-      
+      res.send(service);
     })
 
   }
