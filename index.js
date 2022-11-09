@@ -54,6 +54,13 @@ async function run (){
     })
 
 
+    app.post('/reviews', async (req, res) => {
+      const reviews = req.body;
+      const result = await userReviews.insertOne(reviews);
+      res.send(result);
+
+    })
+
     
 
   }
