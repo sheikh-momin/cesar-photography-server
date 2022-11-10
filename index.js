@@ -24,6 +24,13 @@ async function run (){
         res.send(services);
     });
 
+    app.get('/serviceslimit', async(req, res)=>{
+        const query = {}
+        const cursor =serviceCollection.find(query);
+        const services = await cursor.limit(3).toArray();
+        res.send(services);
+    });
+
     app.get('/services/:id', async(req,res)=>{
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -40,9 +47,7 @@ async function run (){
 
 
     app.get('/reviews', async (req, res) => {
-
       let query = {};
-      console.log(req.query);
       if (req.query.email) {
         query = {
           email: req.query.email
@@ -66,6 +71,14 @@ async function run (){
       const query = { _id: ObjectId(id) };
       const result = await commentCollection.deleteOne(query);
       res.send(result);
+    })
+
+    app.get('/reviews/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { id };
+      const result =  commentCollection.find(query);
+      const service = await result.toArray()
+      res.send(service);
     })
 
   }
